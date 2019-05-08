@@ -20,10 +20,24 @@ func main() {
 // progress returns the progress of the closed and open issues in the Binary
 // identical functions milestone of the Devilution project.
 func progress() (done, total int) {
-	closedDone, closedTotal := getProgress("https://github.com/diasurgical/devilution/milestone/3/paginated_issues?closed=1&page=1")
-	openDone, openTotal := getProgress("https://github.com/diasurgical/devilution/milestone/3/paginated_issues?page=1")
-	done = openDone + closedDone
-	total = openTotal + closedTotal
+	for page := 1; ; page++ {
+		url := fmt.Sprintf("https://github.com/diasurgical/devilution/milestone/3/paginated_issues?closed=1&page=%d", page)
+		closedDone, closedTotal := getProgress(url)
+		if closedTotal == 0 {
+			break
+		}
+		done += closedDone
+		total += closedTotal
+	}
+	for page := 1; ; page++ {
+		url := fmt.Sprintf("https://github.com/diasurgical/devilution/milestone/3/paginated_issues?page=%d", page)
+		openDone, openTotal := getProgress(url)
+		if openTotal == 0 {
+			break
+		}
+		done += openDone
+		total += openTotal
+	}
 	return done, total
 }
 
