@@ -1,7 +1,7 @@
 // The devilution-progress tool reports the percentage of binary identical
 // functions in the Devilution project.
 //
-// https://github.com/diasurgical/devilution/milestone/3
+// https://github.com/diasurgical/devilution/milestone/4
 package main
 
 import (
@@ -21,7 +21,7 @@ func main() {
 // identical functions milestone of the Devilution project.
 func progress() (done, total int) {
 	for page := 1; ; page++ {
-		url := fmt.Sprintf("https://github.com/diasurgical/devilution/milestone/3/paginated_issues?closed=1&page=%d", page)
+		url := fmt.Sprintf("https://github.com/diasurgical/devilution/milestone/4/paginated_issues?closed=1&page=%d", page)
 		closedDone, closedTotal := getProgress(url)
 		if closedTotal == 0 {
 			break
@@ -30,7 +30,7 @@ func progress() (done, total int) {
 		total += closedTotal
 	}
 	for page := 1; ; page++ {
-		url := fmt.Sprintf("https://github.com/diasurgical/devilution/milestone/3/paginated_issues?page=%d", page)
+		url := fmt.Sprintf("https://github.com/diasurgical/devilution/milestone/4/paginated_issues?page=%d", page)
 		openDone, openTotal := getProgress(url)
 		if openTotal == 0 {
 			break
