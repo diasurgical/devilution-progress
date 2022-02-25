@@ -52,7 +52,7 @@ func getProgress(url string) (done, total int) {
 		done += taskDone
 		total += taskTotal
 	}
-	doc.Find(".task-progress-counts").Each(process)
+	doc.Find("span[data-target='tracked-issues-progress.label']").Each(process)
 	return done, total
 }
 
@@ -60,9 +60,16 @@ func getProgress(url string) (done, total int) {
 //
 // Example input: 10 of 42
 func parseProgress(s string) (done, total int) {
-	_, err := fmt.Sscanf(s, "%d of %d", &done, &total)
-	if err != nil {
-		log.Fatalf("unable to parse task progress; expected format `10 of 42`, got `%s`; %v", s, err)
+	if _, err := fmt.Sscanf(s, "%d task done", &done); err == nil {
+		total = done
+		return done, total
+	}
+	if _, err := fmt.Sscanf(s, "%d tasks done", &done); err == nil {
+		total = done
+		return done, total
+	}
+	if _, err := fmt.Sscanf(s, "%d of %d tasks", &done, &total); err != nil {
+		log.Fatalf("unable to parse task progress; expected format `10 of 42 tasks`, got `%s`; %v", s, err)
 	}
 	return done, total
 }
