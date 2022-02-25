@@ -5,7 +5,7 @@ This tool reports the total progress of the [Binary identical functions](https:/
 ## Installation
 
 ```bash
-go get -u github.com/diasurgical/devilution-progress
+go install github.com/diasurgical/devilution-progress@master
 ```
 
 ## Usage
@@ -14,5 +14,5 @@ go get -u github.com/diasurgical/devilution-progress
 devilution-progress
 # Output:
 #
-# progress: 44.75% (849/1897)
+# progress: 97.66% (1211/1240)
 ```
